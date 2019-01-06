@@ -1,7 +1,6 @@
-﻿using ExpectedObjects;
+﻿using CursoOnline.DominioTest._Util;
+using ExpectedObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace CursoOnline.DominioTest
@@ -31,35 +30,6 @@ namespace CursoOnline.DominioTest
             cursoEsperado.ToExpectedObject().ShouldMatch(curso);
         }
 
-        /*
-        [Fact]
-        public void ValidaNomeCursoVazio()
-        {
-            var cursoEsperado = new
-            {
-                Nome = "Informatica Basica",
-                CargaHoraria = (double)80,
-                PublicoAlvo = PublicoAlvo.Estudante,
-                Valor = (double)950
-            };
-
-            Assert.Throws<ArgumentException>(() => new Curso(string.Empty, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor));
-        }
-
-        [Fact]
-        public void ValidaNomeCursoNulo()
-        {
-            var cursoEsperado = new
-            {
-                Nome = "",
-                CargaHoraria = (double)80,
-                PublicoAlvo = PublicoAlvo.Estudante,
-                Valor = (double)950
-            };
-
-            Assert.Throws<ArgumentException>(() => new Curso(null, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor));
-        }*/
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
@@ -73,26 +43,9 @@ namespace CursoOnline.DominioTest
                 Valor = (double)950
             };
 
-            var msg = Assert.Throws<ArgumentException>(() => new Curso(nomeInvalido, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor)).Message;
+            Assert.Throws<ArgumentException>(() => new Curso(nomeInvalido, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor)).ComMensagem("Nome do curso invalido");
 
-            Assert.Equal("Nome do curso invalido", msg);
         }
-
-        /*
-        [Fact]
-        public void ValidarCargaHorariaInvalida()
-        {
-            var cursoEsperado = new
-            {
-                Nome = "Informatica Basica",
-                CargaHoraria = (double)80,
-                PublicoAlvo = PublicoAlvo.Estudante,
-                Valor = (double)950
-            };
-
-            Assert.Throws<ArgumentException>(() => new Curso(cursoEsperado.Nome, 0, cursoEsperado.PublicoAlvo, cursoEsperado.Valor));
-        }
-        */
 
         [Theory]
         [InlineData(0)]
@@ -107,9 +60,7 @@ namespace CursoOnline.DominioTest
                 Valor = (double)950
             };
 
-            var msg = Assert.Throws<ArgumentException>(() => new Curso(cursoEsperado.Nome, cargaHorariaInvalida, cursoEsperado.PublicoAlvo, cursoEsperado.Valor)).Message;
-
-            Assert.Equal("Carga horária dop curso inválida", msg);
+            Assert.Throws<ArgumentException>(() => new Curso(cursoEsperado.Nome, cargaHorariaInvalida, cursoEsperado.PublicoAlvo, cursoEsperado.Valor)).ComMensagem("Carga horária dop curso inválida");
         }
 
         [Theory]
@@ -125,9 +76,7 @@ namespace CursoOnline.DominioTest
                 Valor = (double)950
             };
 
-            var msg = Assert.Throws<ArgumentException>(() => new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, valorInvalido)).Message;
-
-            Assert.Equal("Valor do curso inválido", msg);
+            Assert.Throws<ArgumentException>(() => new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, valorInvalido)).ComMensagem("Valor do curso inválido");
         }
     }
 
@@ -148,7 +97,6 @@ namespace CursoOnline.DominioTest
 
         public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valor)
         {
-            // if (nome == string.Empty)
             if (string.IsNullOrEmpty(nome))
                 throw new ArgumentException("Nome do curso invalido");
             
