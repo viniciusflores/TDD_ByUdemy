@@ -7,7 +7,9 @@ namespace CursoOnline.DominioTest
     {
         // Melhorando a descrição do nome do teste no relatório de testes.
         // [Fact(DisplayName = "Esse é o nome do Teste()")]
-        [Fact]
+
+        // A anotação Fact foi comentada para não ser executada a todo momento.
+        // [Fact]
         public void DeveAsVariaveisTerOMesmoValor()
         {
             // Arrange
