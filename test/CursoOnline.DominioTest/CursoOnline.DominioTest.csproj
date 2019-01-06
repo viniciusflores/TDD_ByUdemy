@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CursoOnline.Dominio\CursoOnline.Dominio.csproj" />
+  </ItemGroup>
+
 </Project>

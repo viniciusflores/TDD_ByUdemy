@@ -1,5 +1,5 @@
-﻿
-using Bogus;
+﻿using Bogus;
+using CursoOnline.Dominio.Cursos;
 using CursoOnline.DominioTest._Builders;
 using CursoOnline.DominioTest._Util;
 using ExpectedObjects;
@@ -9,14 +9,7 @@ using Xunit.Abstractions;
 
 namespace CursoOnline.DominioTest
 {
-    /*
-     * Criar um curso com nome, carga horária, público alvo e valor.
-     * As opções para o público alvo são: Estudante, Universitário, Empregado e Empreendedor.
-     * Todos os campos de curso são obrigatórios.
-     * - NOVO: Curso deve ter uma descrição
-     */
-
-    public class CursoTest : IDisposable
+     public class CursoTest : IDisposable
     {
         private readonly ITestOutputHelper _output;
         private string _nome;
@@ -36,11 +29,6 @@ namespace CursoOnline.DominioTest
             _cargaHoraria = faker.Random.Double(80, 900);
             _publicoAlvo = PublicoAlvo.Estudante;
             _valor = faker.Random.Double(250, 1490.25);
-            // _output.WriteLine($"nome: " + _nome);
-            // _output.WriteLine($"descricao: " + _descricao);
-            // _output.WriteLine($"cargaHoraria: " + _cargaHoraria);
-            // _output.WriteLine($"valor: " + _valor);
-
         }
 
         public void Dispose()
@@ -55,10 +43,10 @@ namespace CursoOnline.DominioTest
             var cursoEsperado = new
             {
                 Nome = _nome,
+                Descricao = _descricao,
                 CargaHoraria = _cargaHoraria,
                 PublicoAlvo = _publicoAlvo,
-                Valor = _valor,
-                Descricao = _descricao
+                Valor = _valor
             };
             
             var curso = new Curso(cursoEsperado.Nome, cursoEsperado.Descricao, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor);
@@ -94,39 +82,8 @@ namespace CursoOnline.DominioTest
         }
     }
 
-    public enum PublicoAlvo
-    {
-        Estudante,
-        Universitário,
-        Empregado,
-        Empreendedor
-    }
 
-    public class Curso
-    {
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public double CargaHoraria { get; set; }
-        public PublicoAlvo PublicoAlvo { get; set; }
-        public double Valor { get; set; }
 
-        public Curso(string nome, string descricao, double cargaHoraria, PublicoAlvo publicoAlvo, double valor)
-        {
-            if (string.IsNullOrEmpty(nome))
-                throw new ArgumentException("Nome do curso invalido");
-            
-            if (cargaHoraria < 1)
-                throw new ArgumentException("Carga horária dop curso inválida");
-
-            if (valor < 1)
-                throw new ArgumentException("Valor do curso inválido");
-
-            Nome = nome;
-            Descricao = descricao;
-            CargaHoraria = cargaHoraria;
-            PublicoAlvo = publicoAlvo;
-            Valor = valor;
-        }
-    }
+    
 
 }

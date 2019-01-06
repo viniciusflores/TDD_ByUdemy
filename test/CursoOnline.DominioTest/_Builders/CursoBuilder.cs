@@ -1,4 +1,6 @@
-﻿namespace CursoOnline.DominioTest._Builders
+﻿using CursoOnline.Dominio.Cursos;
+
+namespace CursoOnline.DominioTest._Builders
 {
     class CursoBuilder
     {
