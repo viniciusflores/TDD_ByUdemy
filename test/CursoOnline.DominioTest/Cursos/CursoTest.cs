@@ -1,4 +1,5 @@
 ﻿
+using Bogus;
 using CursoOnline.DominioTest._Builders;
 using CursoOnline.DominioTest._Util;
 using ExpectedObjects;
@@ -29,12 +30,17 @@ namespace CursoOnline.DominioTest
         {
             _output = output;
             _output.WriteLine("Construtor sendo executado!");
-            _nome = "Informatica Basica";
-            _descricao = "Descrição para o curso de TI Basico";
-            _cargaHoraria = 80;
+            var faker = new Faker();
+            _nome = faker.Random.Word();
+            _descricao = faker.Lorem.Paragraph();
+            _cargaHoraria = faker.Random.Double(80, 900);
             _publicoAlvo = PublicoAlvo.Estudante;
-            _valor = 950;
-            
+            _valor = faker.Random.Double(250, 1490.25);
+            // _output.WriteLine($"nome: " + _nome);
+            // _output.WriteLine($"descricao: " + _descricao);
+            // _output.WriteLine($"cargaHoraria: " + _cargaHoraria);
+            // _output.WriteLine($"valor: " + _valor);
+
         }
 
         public void Dispose()
