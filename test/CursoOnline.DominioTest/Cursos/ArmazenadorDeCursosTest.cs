@@ -1,6 +1,8 @@
 ﻿using Bogus;
 using CursoOnline.Dominio.Cursos;
+using CursoOnline.DominioTest._Util;
 using Moq;
+using System;
 using Xunit;
 
 namespace CursoOnline.DominioTest.Cursos
@@ -19,7 +21,7 @@ namespace CursoOnline.DominioTest.Cursos
                 nome = fake.Random.Words(),
                 descricao = fake.Lorem.Paragraph(),
                 cargaHoraria = fake.Random.Double(20,200),
-                publicoAlvoId = 1,
+                publicoAlvo = "Estudante",
                 valor = fake.Random.Double(500,2000)
             };
 
@@ -43,6 +45,15 @@ namespace CursoOnline.DominioTest.Cursos
             ));
         }
 
+        [Fact]
+        public void ValidaPublicoAlvoInformado()
+        {
+            var publicoAlvoInvalido = "Médico";
+            _cursoDto.publicoAlvo = publicoAlvoInvalido;
+
+            Assert.Throws<ArgumentException>(() => _armazenadorDeCurso.Armazenar(_cursoDto)).ComMensagem("Público Alvo Inválido");
+        }
+
     }
 
     public interface ICursoRepositorio
@@ -63,7 +74,11 @@ namespace CursoOnline.DominioTest.Cursos
 
         public void Armazenar(CursoDto cursoDto)
         {
-            Curso curso = new Curso(cursoDto.nome, cursoDto.descricao, cursoDto.cargaHoraria, PublicoAlvo.Estudante, cursoDto.valor);
+            Enum.TryParse(typeof(PublicoAlvo), cursoDto.publicoAlvo, out var publicoAlvo);
+            if (publicoAlvo == null)
+                throw new ArgumentException("Público Alvo Inválido");
+
+            Curso curso = new Curso(cursoDto.nome, cursoDto.descricao, cursoDto.cargaHoraria, (PublicoAlvo) publicoAlvo, cursoDto.valor);
 
             _cursoRepositorio.Adicionar(curso);
         }
@@ -74,7 +89,7 @@ namespace CursoOnline.DominioTest.Cursos
         public string nome { get; set; }
         public string descricao { get; set; }
         public double cargaHoraria { get; set; }
-        public int publicoAlvoId { get; set; }
+        public string publicoAlvo { get; set; }
         public double valor { get; set; }
     }
 
