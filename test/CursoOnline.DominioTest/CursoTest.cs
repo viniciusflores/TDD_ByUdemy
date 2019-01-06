@@ -23,34 +23,32 @@ namespace CursoOnline.DominioTest
             {
                 Nome = "Informatica Basica",
                 CargaHoraria = (double) 80,
-                PublicoAlvo = "Estudantes",
+                PublicoAlvo = PublicoAlvo.Estudante,
                 Valor = (double) 950
             };
-
-            /* string nome = "Informatica Basica";
-            double cargaHoraria = 80;
-            string publicoAlvo = "Estudantes";
-            double valor = 950;*/
-
+            
             var curso = new Curso(cursoEsperado.Nome, cursoEsperado.CargaHoraria, cursoEsperado.PublicoAlvo, cursoEsperado.Valor);
-
-            /*Assert.Equal(nome, curso.Nome);
-            Assert.Equal(cargaHoraria, curso.CargaHoraria);
-            Assert.Equal(publicoAlvo, curso.PublicoAlvo);
-            Assert.Equal(valor, curso.Valor);*/
 
             cursoEsperado.ToExpectedObject().ShouldMatch(curso);
         }
+    }
+
+    public enum PublicoAlvo
+    {
+        Estudante,
+        Universitário,
+        Empregado,
+        Empreendedor
     }
 
     public class Curso
     {
         public string Nome { get; set; }
         public double CargaHoraria { get; set; }
-        public string PublicoAlvo { get; set; }
+        public PublicoAlvo PublicoAlvo { get; set; }
         public double Valor { get; set; }
 
-        public Curso(string nome, double cargaHoraria, string publicoAlvo, double valor)
+        public Curso(string nome, double cargaHoraria, PublicoAlvo publicoAlvo, double valor)
         {
             Nome = nome;
             CargaHoraria = cargaHoraria;
